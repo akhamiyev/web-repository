@@ -1,0 +1,104 @@
+var mySwiper = new Swiper(".swiper-container", {
+  direction: "vertical",
+  loop: true,
+  pagination: ".swiper-pagination",
+  grabCursor: true,
+  speed: 1000,
+  paginationClickable: true,
+  parallax: true,
+  autoplay: false,
+  effect: "slide",
+  mousewheelControl: 1
+});
+
+
+
+let mainNav = document.getElementById("js-menu");
+let navBarToggle = document.getElementById("js-navbar-toggle");
+
+navBarToggle.addEventListener("click", function() {
+  mainNav.classList.toggle("active");
+});
+
+
+$(window).on('load', function () {
+    var $preloader = $('#page-preloader'),
+        $spinner   = $preloader.find('.spinner');
+    $spinner.fadeOut();
+    $preloader.delay(0).fadeOut('slow');
+});
+
+
+
+var linkNav = document.querySelectorAll('[href^="#"]'), //выбираем все ссылки к якорю на странице
+    V = 1;  // скорость, может иметь дробное значение через точку (чем меньше значение - тем больше скорость)
+for (var i = 0; i < linkNav.length; i++) {
+    linkNav[i].addEventListener('click', function(e) { //по клику на ссылку
+        e.preventDefault(); //отменяем стандартное поведение
+        var w = window.pageYOffset,  // производим прокрутка прокрутка
+            hash = this.href.replace(/[^#]*(.*)/, '$1');  // к id элемента, к которому нужно перейти
+        t = document.querySelector(hash).getBoundingClientRect().top,  // отступ от окна браузера до id
+            start = null;
+        requestAnimationFrame(step);  // подробнее про функцию анимации [developer.mozilla.org]
+        function step(time) {
+            if (start === null) start = time;
+            var progress = time - start,
+                r = (t < 0 ? Math.max(w - progress/V, w + t) : Math.min(w + progress/V, w + t));
+            window.scrollTo(0,r);
+            if (r != w + t) {
+                requestAnimationFrame(step)
+            } else {
+                location.hash = hash  // URL с хэшем
+            }
+        }
+    }, false);
+}
+var rolly = document.getElementById("rollyButton");
+var sushi = document.getElementById("sushiButton");
+var pizza = document.getElementById("pizzaButton");
+var gunkan = document.getElementById("gunkanButton");
+var pizzaDiv = document.getElementById("pizza");
+var sushiDiv = document.getElementById("sushi");
+var rollyDiv = document.getElementById("rolly");
+var gunkanDiv = document.getElementById("gunkan")
+rolly.addEventListener("click",function(){
+  sushiDiv.style.display = "none";
+  pizzaDiv.style.display = "none";
+  rollyDiv.style.display = "flex";
+  gunkanDiv.style.display = "none";
+  rolly.style.color = "#e81818";
+  pizza.style.color = "black";
+  sushi.style.color = "black";
+  gunkan.style.color = "black";
+});
+pizza.addEventListener("click",function(){
+  sushiDiv.style.display = "none";
+  rollyDiv.style.display = "none";
+  pizzaDiv.style.display = "flex";
+  gunkanDiv.style.display = "none";
+  pizza.style.color = "#e81818";
+  rolly.style.color = "black";
+  sushi.style.color = "black";
+  gunkan.style.color = "black";
+});
+sushi.addEventListener("click",function(){
+  rollyDiv.style.display = "none";
+  pizzaDiv.style.display = "none";
+  sushiDiv.style.display = "flex";
+  gunkanDiv.style.display = "none";
+  sushi.style.color = "#e81818";
+  pizza.style.color = "black";
+  rolly.style.color = "black";
+  gunkan.style.color = "black";
+});
+gunkan.addEventListener("click",function(){
+  rollyDiv.style.display = "none";
+  pizzaDiv.style.display = "none";
+  gunkanDiv.style.display = "flex";
+  sushiDiv.style.display = "none";
+  gunkan.style.color = "#e81818";
+  pizza.style.color = "black";
+  rolly.style.color = "black";
+  sushi.style.color = "black";
+  });
+
